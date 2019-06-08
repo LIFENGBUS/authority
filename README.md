@@ -1,2 +1,2 @@
 # authority
-rabc权限管理
+rbac权限管理
