@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ieng.authority.dao.MenuMapper">
+	
+	<resultMap type="menu" id="menuResultMap">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="pid" property="pid" />
+		<collection property="children" select="getMenuByPid" column="{rid=rid,pid=id}"></collection>
+	</resultMap>
+	
+	<select id="getMenuByPid" resultMap="menuResultMap">
+		SELECT m.* ,#{rid} rid
+		FROM `menu` m JOIN
+		`role_menu` r ON r.mid = m.id
+		WHERE r.rid = #{rid} AND m.pid=#{pid}
+	</select>
+	
+</mapper>
